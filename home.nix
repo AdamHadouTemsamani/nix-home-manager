@@ -1,76 +1,93 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
   home.username = "adamh";
   home.homeDirectory = "/home/adamh";
+  home.stateVersion = "26.05";
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "26.05"; # Please read the comment before changing.
+  targets.genericLinux.enable = true;
+  nixpkgs.config.allowUnfree = true;
+  
+  # Gnome App Grid & Icon Sync
+  home.activation.syncNixDesktopAndIcons = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    mkdir -p $HOME/.local/share/applications
+    find $HOME/.local/share/applications -name "nix-*.desktop" -delete
+    if [ -d "$HOME/.nix-profile/share/applications" ]; then
+      for app in $HOME/.nix-profile/share/applications/*.desktop; do
+        [ -f "$app" ] && ln -sf "$app" "$HOME/.local/share/applications/nix-$(basename "$app")"
+      done
+    fi
+    
+    mkdir -p $HOME/.local/share/icons/hicolor
+    if [ -d "$HOME/.nix-profile/share/icons/hicolor" ]; then
+      cd $HOME/.nix-profile/share/icons/hicolor
+      find . -type f -exec sh -c '
+        mkdir -p "$HOME/.local/share/icons/hicolor/$(dirname "{}")"
+        ln -sf "$HOME/.nix-profile/share/icons/hicolor/{}" "$HOME/.local/share/icons/hicolor/{}"
+      ' \;
+      gtk-update-icon-cache -f -t $HOME/.local/share/icons/hicolor || true
+    fi
+    update-desktop-database $HOME/.local/share/applications || true
+    touch $HOME/.local/share/applications
+  '';
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+  # Declarative Flatpaks
+  services.flatpak = {
+    enable = true;
+    packages = [
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    ];
+  };
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+  # GTK Styling
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
+  };
+
+  # Gnome System Settings
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+    "org/gnome/desktop/wm/preferences" = {
+      button-layout = "appmenu:minimize,maximize,close"; 
+    };
+  };
+
+  # User Packages
+  home.packages = with pkgs; [
+    cubeb
+    python3Packages.ds4drv
+    galaxy-buds-client
+    neovim
+    fastfetch 
   ];
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-  };
-
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. These will be explicitly sourced when using a
-  # shell provided by Home Manager. If you don't want to manage your shell
-  # through Home Manager then you have to manually source 'hm-session-vars.sh'
-  # located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/adamh/etc/profile.d/hm-session-vars.sh
-  #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  
+  programs.fish = {
+    enable = true;
+    shellAbbrs = {
+      v = "nvim";
+      vim = "nvim";
+      hms = "home-manager switch --flake ~/.config/home-manager/#adamh";
+    };
+    interactiveShellInit = ''
+      set -g fish_greeting ""
+      fish_add_path ~/.nix-profile/bin 
+      fastfetch --logo none
+    '';
+  };
 }
