@@ -89,6 +89,7 @@
     };
     interactiveShellInit = ''
       # Block GNOME's graphical SSH popup, force terminal input
+      set -gx SSH_ASKPASS ""
       set -gx SSH_ASKPASS_REQUIRE never
 
       set -g fish_greeting ""
