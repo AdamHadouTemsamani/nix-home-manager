@@ -6,11 +6,11 @@
   home.stateVersion = "26.05";
 
   imports = [
-    ./modules/desktop.nix
+    ./modules/ghostty-config.nix
     ./modules/shell.nix
-    ./modules/terminal.nix
+    ./modules/packages.nix
     ./modules/editor.nix
-    ./modules/shortcuts.nix
+    ./modules/gnome-settings.nix
   ];
 
   targets.genericLinux.enable = true;

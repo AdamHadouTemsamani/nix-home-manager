@@ -37,24 +37,4 @@
     enable = true;
     packages = [];
   };
-
-  # Styling
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-    };
-    "org/gnome/desktop/wm/preferences" = {
-      button-layout = "appmenu:minimize,maximize,close";
-    };
-  };
-
-  gtk = {
-    enable = true;
-    theme = {
-      name = "adw-gtk3-dark";
-      package = pkgs.adw-gtk3;
-    };
-  };
-
-  xdg.dataFile."icons/hicolor/scalable/apps/com.mitchellh.ghostty.svg".source = ../icons/ghostty.svg;
 }
