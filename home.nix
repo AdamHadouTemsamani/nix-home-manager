@@ -15,4 +15,9 @@
   targets.genericLinux.enable = true;
   programs.home-manager.enable = true;
   
+  home.sessionVariables = {
+    SSH_ASKPASS = "";
+    SSH_ASKPASS_REQUIRE = "never";
+  };
+
 }
