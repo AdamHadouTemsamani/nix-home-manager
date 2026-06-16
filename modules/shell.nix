@@ -47,6 +47,34 @@
     };
   };
 
+  programs.fastfetch = {
+    enable = true;
+    settings = {
+      logo = {
+        source = "ghostbsd";
+        color = { "1" = "blue"; };
+      };
+      display = {
+        color = {
+          keys = "blue";
+          title = "green";
+        };
+      };
+      modules = [
+        "title"
+        "separator"
+        "os"
+        "host"
+        "kernel"
+        "shell"
+        "cpu"
+        "gpu"
+        "memory"
+        "disk"
+      ];
+    };
+  };
+
   programs.fish = {
     enable = true;
     shellAbbrs = {
@@ -60,9 +88,12 @@
       top = "btop";
     };
     interactiveShellInit = ''
+      # Block GNOME's graphical SSH popup, force terminal input
+      set -gx SSH_ASKPASS_REQUIRE never
+
       set -g fish_greeting ""
-      fish_add_path ~/.nix-profile/bin 
-      fastfetch --logo none --color-keys blue --color-title green
+      fish_add_path ~/.nix-profile/bin
+      fastfetch
     '';
   };
 }

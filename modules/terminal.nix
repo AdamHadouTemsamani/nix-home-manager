@@ -10,6 +10,7 @@
     window-theme = "system"
     gtk-titlebar = true
     gtk-titlebar-style = "native"
+    resize-overlay = never
     background = 24273a
     foreground = cad3f5
     cursor-color = f4dbd6
