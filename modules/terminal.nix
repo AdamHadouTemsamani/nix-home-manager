@@ -4,13 +4,12 @@
   home.file.".config/ghostty/config".text = ''
     font-family = "JetBrainsMono Nerd Font"
     font-size = 12
-    background-opacity = 0.95
+    background-opacity = 1
     window-padding-x = 12
     window-padding-y = 12
     window-theme = "system"
     gtk-titlebar = true
     gtk-titlebar-style = "native"
-
     background = 24273a
     foreground = cad3f5
     cursor-color = f4dbd6
