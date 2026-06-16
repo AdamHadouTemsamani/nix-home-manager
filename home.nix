@@ -10,6 +10,7 @@
     ./modules/shell.nix
     ./modules/terminal.nix
     ./modules/editor.nix
+    ./modules/shortcuts.nix
   ];
 
   targets.genericLinux.enable = true;
