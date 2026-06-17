@@ -81,5 +81,17 @@
     };
   };
 
+  # Ghostty Settings
   xdg.dataFile."icons/hicolor/scalable/apps/com.mitchellh.ghostty.svg".source = ../assets/ghostty.svg;
+  xdg.desktopEntries."com.mitchellh.ghostty" = {
+    name = "Ghostty";
+    genericName = "Terminal Emulator";
+    exec = "ghostty"; 
+    terminal = false;
+    categories = [ "System" "TerminalEmulator" ];
+    icon = "com.mitchellh.ghostty";
+    settings = {
+      StartupWMClass = "com.mitchellh.ghostty";
+    };
+  };
 }

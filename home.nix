@@ -6,8 +6,7 @@
   home.stateVersion = "26.05";
 
   imports = [
-    ./modules/ghostty-config.nix
-    ./modules/shell.nix
+    ./modules/terminal.nix
     ./modules/packages.nix
     ./modules/editor.nix
     ./modules/gnome-settings.nix
