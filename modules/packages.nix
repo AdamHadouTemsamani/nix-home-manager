@@ -3,10 +3,8 @@
 {
   # Packages
   home.packages = with pkgs; [
-    cubeb
     python3Packages.ds4drv
     galaxy-buds-client
-    papirus-icon-theme
   ];
 
   home.activation.linkDesktopFiles = lib.hm.dag.entryAfter ["writeBoundary"] ''
