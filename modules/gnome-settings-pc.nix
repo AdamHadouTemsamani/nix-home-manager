@@ -11,11 +11,9 @@
     gnomeExtensions.user-themes
     gnomeExtensions.appindicator
     gnomeExtensions.clipboard-indicator
-    gnomeExtensions.tiling-assistant
     gnomeExtensions.rounded-window-corners
     gnomeExtensions.just-perfection
-    # gnomeExtensions.wack-lockscreen-clock
-    # gnomeExtensions.app-hider 
+    gnomeExtensions.pop-shell
   ];
 
   dconf.settings = {
@@ -31,10 +29,10 @@
         "wack-lockscreen-clock@rinzler69-wastaken.github.com"
         "appindicatorsupport@rgcjonas.gmail.com"
         "clipboard-indicator@tudmotu.com"
-        "tiling-assistant@leleat-on-github"
         "rounded-window-corners@fxgn"
         "just-perfection-desktop@just-perfection"
         "app-hider@lynith.dev"
+        "pop-shell@system76.com"
       ];
     };
 
@@ -96,9 +94,9 @@
     };
 
     "org/gnome/shell/extensions/gsconnect" = {
-      enabled = false;
+      enabled = true;
       missing-openssl = false;
-      name = "adamh-laptop";
+      name = "adamh-pc";
     };
 
     "org/gnome/shell/extensions/hidetopbar" = {
@@ -122,9 +120,19 @@
       settings-version = lib.hm.gvariant.mkUint32 9;
     };
 
-    "org/gnome/shell/extensions/tiling-assistant" = {
-      focus-hint-color = "rgb(53,132,228)";
-      last-version-installed = 54;
+    "org/gnome/shell/extensions/pop-shell" = {
+      activate-launcher = [ "<Super>space" ];
+      active-hint = true;
+      active-hint-border-radius = lib.hm.gvariant.mkUint32 20;
+      gap-inner = lib.hm.gvariant.mkUint32 2;
+      gap-outer = lib.hm.gvariant.mkUint32 2;
+      hint-color-rgba = "rgb(160,175,190)";
+      log-level = lib.hm.gvariant.mkUint32 0;
+      mouse-cursor-focus-location = lib.hm.gvariant.mkUint32 4;
+      show-title = true;
+      smart-gaps = false;
+      snap-to-grid = true;
+      tile-by-default = true;
     };
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
@@ -172,10 +180,10 @@
       cycle-windows-backward = [ "<Shift><Control><Alt>Tab" ];
       maximize = [];
       minimize = [];
-      move-to-monitor-left = [];
-      move-to-monitor-right = [];
-      move-to-workspace-left = [ "<Shift><Super>Left" ];
-      move-to-workspace-right = [ "<Shift><Super>Right" ];
+      move-to-monitor-left = [ "<Shift><Super>Left" ];
+      move-to-monitor-right = [ "<Shift><Super>Right" ];
+      move-to-workspace-left = [];
+      move-to-workspace-right = [];
       show-desktop = [ "<Super>d" ];
       switch-applications = [];
       switch-applications-backward = [];

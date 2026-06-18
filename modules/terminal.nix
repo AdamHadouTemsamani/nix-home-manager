@@ -85,7 +85,7 @@
     shellAbbrs = {
       v = "nvim";
       vim = "nvim";
-      hms = "home-manager switch --flake ~/.config/home-manager/#adamh";
+      hms = "home-manager switch --flake ~/.config/home-manager/#adamh@(hostname) --impure";
       cat = "bat";
       top = "btop";
     };

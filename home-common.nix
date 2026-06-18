@@ -1,15 +1,16 @@
+# home-common.nix
 { config, pkgs, lib, ... }:
 
 {
   home.username = "adamh";
   home.homeDirectory = "/home/adamh";
   home.stateVersion = "26.05";
-
+  
   imports = [
     ./modules/terminal.nix
     ./modules/packages.nix
     ./modules/editor.nix
-    ./modules/gnome-settings.nix
+    # Removed gnome-settings.nix from here
   ];
 
   targets.genericLinux.enable = true;
@@ -19,5 +20,4 @@
     SSH_ASKPASS = "";
     SSH_ASKPASS_REQUIRE = "never";
   };
-
 }
