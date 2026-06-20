@@ -3,7 +3,7 @@
 {
   imports = [
     ../../home-common.nix
-    ../../modules/gnome-settings-pc.nix
+    ../../modules/plasma.nix
   ];
 
   # Add Laptop-only packages

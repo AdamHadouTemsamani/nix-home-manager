@@ -99,46 +99,37 @@
     '';
   };
 
-  programs.ghostty = {
-    enable = true;
-    # Custom dummy package to silence the getExe warning
-    package = pkgs.runCommand "ghostty-dummy" { meta.mainProgram = "ghostty"; } "mkdir $out";
-    installBatSyntax = false;
-    installVimSyntax = false;
-    settings = {
-      font-family = "JetBrainsMono Nerd Font";
-      font-size = 12;
-      background-opacity = 1;
-      window-padding-x = 12;
-      window-padding-y = 12;
-      window-theme = "system";
-      gtk-titlebar = true;
-      gtk-titlebar-style = "native";
-      resize-overlay = "never";
-      background = "24273a";
-      foreground = "cad3f5";
-      cursor-color = "f4dbd6";
-      cursor-text = "24273a";
-      selection-background = "5b6078";
-      selection-foreground = "cad3f5";
-      palette = [
-        "0=#494d64"
-        "1=#ed8796"
-        "2=#a6da95"
-        "3=#eed49f"
-        "4=#8aadf4"
-        "5=#f5bde6"
-        "6=#8bd5ca"
-        "7=#b8c0e0"
-        "8=#5b6078"
-        "9=#ed8796"
-        "10=#a6da95"
-        "11=#eed49f"
-        "12=#8aadf4"
-        "13=#f5bde6"
-        "14=#8bd5ca"
-        "15=#a5adcb"
-      ];
-    };
-  };
+  xdg.configFile."ghostty/config".text = ''
+    font-family = JetBrainsMono Nerd Font
+    font-size = 12
+    background-opacity = 1
+    window-padding-x = 12
+    window-padding-y = 12
+    window-theme = "system"
+    gtk-titlebar = true
+    gtk-titlebar-style = "native"
+    resize-overlay = "never"
+    background = 24273a
+    foreground = cad3f5
+    cursor-color = f4dbd6
+    cursor-text = 24273a
+    selection-background = 5b6078
+    selection-foreground = cad3f5
+    palette = 0=#494d64
+    palette = 1=#ed8796
+    palette = 2=#a6da95
+    palette = 3=#eed49f
+    palette = 4=#8aadf4
+    palette = 5=#f5bde6
+    palette = 6=#8bd5ca
+    palette = 7=#b8c0e0
+    palette = 8=#5b6078
+    palette = 9=#ed8796
+    palette = 10=#a6da95
+    palette = 11=#eed49f
+    palette = 12=#8aadf4
+    palette = 13=#f5bde6
+    palette = 14=#8bd5ca
+    palette = 15=#a5adcb
+  '';
 }
