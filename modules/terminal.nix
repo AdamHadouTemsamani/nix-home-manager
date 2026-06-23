@@ -7,6 +7,7 @@
     fastfetch
     btop
     nerd-fonts.jetbrains-mono
+    pokemon-colorscripts
   ];
 
   programs.eza = {
@@ -55,10 +56,6 @@
   programs.fastfetch = {
     enable = true;
     settings = {
-      logo = {
-        source = "ghostbsd";
-        color = { "1" = "blue"; };
-      };
       display = {
         color = {
           keys = "blue";
@@ -95,7 +92,8 @@
 
       set -g fish_greeting ""
       fish_add_path ~/.nix-profile/bin
-      fastfetch
+      
+      fastfetch --logo-type file --logo (pokemon-colorscripts -r --no-title | psub)
     '';
   };
 

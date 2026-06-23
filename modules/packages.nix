@@ -11,7 +11,7 @@
   # Declarative Flatpaks (Add valid Flathub IDs here if needed)
   services.flatpak = {
     enable = true;
-    packages = [
+    packages = [  
     ];
   };
 }
